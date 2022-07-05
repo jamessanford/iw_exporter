@@ -6,7 +6,7 @@ This shells out to `iw dev` and `iw dev <dev> station dump`.  It does not use ne
 
 #### Install, run, view
 
-    go get -u github.com/jamessanford/iw_exporter
+    go install github.com/jamessanford/iw_exporter@latest
     iw_exporter
     curl http://localhost:6798/metrics
 
