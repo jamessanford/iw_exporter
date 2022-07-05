@@ -3,11 +3,11 @@ package iw
 import (
 	"bufio"
 	"io"
+	"log"
 	"strconv"
 	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/common/log"
 )
 
 // Station holds information about the current wifi station
@@ -40,7 +40,7 @@ func (s *Station) line(line string, ch chan<- prometheus.Metric) {
 
 	value, err := strconv.ParseFloat(v, 64)
 	if err != nil {
-		log.Errorf("%v: %v", kv, err)
+		log.Printf("%q: %q: %v\n", line, v, err)
 		return
 	}
 	ch <- prometheus.MustNewConstMetric(

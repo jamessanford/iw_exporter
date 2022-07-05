@@ -1,9 +1,10 @@
 package collector
 
 import (
+	"log"
+
 	"github.com/jamessanford/iw_exporter/iw"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/common/log"
 )
 
 // Instrumentation for the collector itself
@@ -47,7 +48,7 @@ func (i *iwCollector) Collect(ch chan<- prometheus.Metric) {
 	devs, err := iw.DeviceCmd()
 	if err != nil {
 		iwErrorsTotal.Inc()
-		log.Error(err)
+		log.Println(err)
 		return
 	}
 
@@ -55,7 +56,7 @@ func (i *iwCollector) Collect(ch chan<- prometheus.Metric) {
 	for _, d := range devs {
 		if err = iw.StationDumpCmd(d.Iface, ch); err != nil {
 			iwErrorsTotal.Inc()
-			log.Error(err)
+			log.Println(err)
 			// keep going
 		}
 	}

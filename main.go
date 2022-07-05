@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/jamessanford/iw_exporter/collector"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/prometheus/common/log"
 )
 
 var httpAddr = flag.String("http", ":6798", "listen on this address")
@@ -23,6 +23,6 @@ func main() {
 		_, _ = io.WriteString(w, "iw_exporter\n")
 	})
 	http.Handle("/metrics", promhttp.Handler())
-	log.Infof("listening on %v", *httpAddr)
-	log.Fatal(http.ListenAndServe(*httpAddr, nil))
+	log.Printf("listening on %v\n", *httpAddr)
+	log.Fatalln(http.ListenAndServe(*httpAddr, nil))
 }
